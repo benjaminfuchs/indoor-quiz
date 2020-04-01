@@ -1,11 +1,10 @@
 language: python
 
 addons:
-  chrome: 80.0.3987.162
+  chrome: stable
 
 env:
-  - CHROMEDRIVER_VERSION="80.0.3987.106"
-  - NODE_VERSION="12.16.1"
+  - CHROMEDRIVER_VERSION="80.0.3987.106" NODE_VERSION="12.16.1"
 
 before_install:
   - nvm install ${NODE_VERSION}
