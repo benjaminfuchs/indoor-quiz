@@ -2,7 +2,6 @@
 
 from quizdriver import QuizDriver
 
-
 class Presenter(QuizDriver):
 
     def __init__(self):

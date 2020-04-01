@@ -1,31 +1,39 @@
 """ Test dialog interaction """
 
+import time
+from roles import Player, Presenter
 from testcase import TestCase
-from roles import Player, Presenter, Quizmaster
+
 
 class TestDialog(TestCase):
 
-    def test_joining_one_player(self):
-
+    @staticmethod
+    def test_joining_one_player():
         with Presenter() as presenter:
             Player("AFFEAFFE")
+            time.sleep(2) # FIXME(bfuchs) Ugly wait, find better solution with selenium
 
-            presenter.assert_player_name(1, "AFFEAFFE")
-            presenter.assert_player_name(2, "Waiting...")
-#
-#
-# def test_joining_two_player():
-#     with Presenter() as presenter:
-#         Player("AFFEAFFE")
-#         Player("DEADBEEF")
-#
-#         presenter.assert_player_name(1, "AFFEAFFE")
-#         presenter.assert_player_name(2, "DEADBEEF")
-#
-#
-# def test_joining_player_before_presenter():
-#     Player("AFFEAFFE")
-#
-#     with Presenter() as presenter:
-#         presenter.assert_player_name(1, "Waiting...")
-#         presenter.assert_player_name(2, "Waiting...")
+            actual_name = presenter.get_player_name(1)
+            assert actual_name == "AFFEAFFE"
+
+    @staticmethod
+    def test_joining_two_player():
+        with Presenter() as presenter:
+            Player("AFFEAFFE")
+            Player("DEADBEEF")
+            time.sleep(2) # FIXME(bfuchs) Ugly wait, find better solution with selenium
+
+            actual_name = presenter.get_player_name(1)
+            assert actual_name == "AFFEAFFE"
+            actual_name = presenter.get_player_name(2)
+            assert actual_name == "DEADBEEF"
+
+    @staticmethod
+    def test_joining_player_before_presenter():
+        Player("AFFEAFFE")
+
+        with Presenter() as presenter:
+            actual_name = presenter.get_player_name(1)
+            assert actual_name == "Waiting..."
+            actual_name = presenter.get_player_name(2)
+            assert actual_name == "Waiting..."

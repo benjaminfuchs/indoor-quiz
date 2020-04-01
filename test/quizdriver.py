@@ -46,9 +46,7 @@ class QuizDriver(ContextDecorator):
         player_name_form.send_keys(name)
         join_button.click()
 
-    def assert_player_name(self, num, expected_name):
+    def get_player_name(self, num):
         name_player_textbox = self._driver.find_element_by_id(
             'namePlayer' + str(num))
-        actual_name = name_player_textbox.text
-        print(actual_name)
-        assert expected_name == actual_name
+        return name_player_textbox.text

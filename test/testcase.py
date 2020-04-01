@@ -1,9 +1,9 @@
 """ Testcase class for generic setup and teardown """
 
-import git
-import os
 from multiprocessing import Process
+import os
 from Naked.toolshed.shell import execute_js
+import git
 import pytest
 
 class TestCase:
@@ -15,10 +15,12 @@ class TestCase:
         git_root = git_repo.git.rev_parse("--show-toplevel")
         return git_root
 
+    @classmethod
     @pytest.fixture(autouse=True)
     def server(cls):
         git_root = cls._get_git_root()
-        node_process = Process(target=execute_js, args=[os.path.join(git_root, 'server.js')])
+        node_process = Process(target=execute_js,
+                               args=[os.path.join(git_root, 'server.js')])
         node_process.start()
         yield
         node_process.terminate()
