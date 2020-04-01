@@ -1,4 +1,4 @@
-# quiz
+# indoor-quiz
 
 Two players quiz to guess object locations in ground plan.
 
