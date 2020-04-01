@@ -1,3 +1,4 @@
+GitPython==3.1.0
 Naked==0.1.31
-pytest==3.3.2
+pytest==5.4.1
 selenium==3.141.0

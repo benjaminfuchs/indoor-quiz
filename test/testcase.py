@@ -1,14 +1,24 @@
 """ Testcase class for generic setup and teardown """
 
+import git
+import os
 from multiprocessing import Process
-import pytest
 from Naked.toolshed.shell import execute_js
+import pytest
 
 class TestCase:
 
+    @staticmethod
+    def _get_git_root():
+        git_repo = git.Repo(os.path.dirname(__file__),
+                            search_parent_directories=True)
+        git_root = git_repo.git.rev_parse("--show-toplevel")
+        return git_root
+
     @pytest.fixture(autouse=True)
     def server(cls):
-        node_process = Process(target=execute_js, args='../server.js')
+        git_root = cls._get_git_root()
+        node_process = Process(target=execute_js, args=[os.path.join(git_root, 'server.js')])
         node_process.start()
         yield
         node_process.terminate()
