@@ -21,7 +21,7 @@ class QuizDriver(ContextDecorator):
         else:
             self._options.binary_location = "/usr/bin/chromium-browser"
 
-        self._driver = webdriver.Chrome(chrome_options=self._options)
+        self._driver = webdriver.Chrome(options=self._options)
         self._driver.implicitly_wait(ELASTIC_TIME)
         self._driver.get('http://localhost:8900/')
 
