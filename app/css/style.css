@@ -1,0 +1,248 @@
+body {
+  padding: 0;
+  margin: 0;
+  background-image: url("../media/brickwall.jpg");
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+}
+
+#black, #intro {
+  display: none;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 100000;
+}
+
+#controll {
+  background-color: #fff;
+  text-align: center;
+  display: none;
+  height: 100%;
+  z-index: 1000;
+}
+
+#header, #game {
+  width: 100%;
+  display: none;
+  z-index: 1000;
+}
+
+#header {
+  position: absolute;
+  top: 1%;
+  max-height: 10%;
+}
+
+#game {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+}
+
+.box {
+  width: 95%;
+  display: table;
+  margin: 0 auto;
+}
+
+.box .box-row {
+  display: table-row;
+  height: 100%;
+}
+
+.box .box-cell {
+  display: table-cell;
+  max-width: 30%;
+  height: 100%;
+}
+
+.box-round {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.9);
+}
+
+#header .box .box-cell {
+  display: table-cell;
+  width: 30%;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+#header .box .empty {
+  display: table-cell;
+  width: 50px;
+}
+
+#game img {
+  width: 66%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+#dialog {
+  position: absolute;
+  font-size: 28px;
+  color: black;
+  pointer-events: none;
+  left: 50%;
+  width: 600px;
+  margin-left: -270px;
+  top: 50%;
+  margin-top: -172px;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 20px;
+  display: none;
+  z-index: 1000;
+}
+
+#dialog h1 {
+  font-weight: 700;
+  font-size: 40px;
+  color: #444;
+  text-align: center;
+}
+
+#dialog li {
+  margin-bottom: 10px;
+}
+
+input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  background-color: rgb(255, 255, 255);
+  color: #444;
+  padding: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 3px;
+  border-width: 0;
+  min-width: 15%;
+  border: 2px solid #333;
+  pointer-events: auto;
+}
+
+.buttons {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  background-color: #444;
+  color: white;
+  padding: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 3px;
+  border-width: 0;
+  min-width: 15%;
+  border-bottom: 2px solid #333;
+  pointer-events: auto;
+}
+
+.center-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+}
+
+#buzzerButton {
+  background-color: rgb(212, 41, 41);
+  border: 2px solid #333;
+  color: white;
+}
+
+#game img {
+  width: 66%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+#controll textarea {
+  height: 100%;
+  width: 95%;
+}
+
+button:hover, button:focus {
+  background-color: #666;
+  cursor: pointer;
+}
+
+button:active {
+  border-bottom: 2px solid rgb(172, 172, 172);
+  background-color: rgb(197, 197, 197);
+}
+
+#header table {
+  padding-right: 10px;
+  padding-left: 10px;
+  border-spacing: 20px 0px;
+  text-align: center;
+}
+
+@media (max-width: 800px), (max-height: 404px) {
+  #dialog {
+    font-size: 24px;
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 30px;
+    border-radius: 0;
+  }
+  #dialog h1 {
+    font-size: 43.2px;
+  }
+  #dialog li {
+    margin-bottom: 8px;
+  }
+  #dialogContent {
+    max-width: 430px;
+    margin: 0 auto;
+  }
+  #controll, #header, #buzzer {
+    font-size: 20px;
+  }
+  button {
+    font-size: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  #header table {
+    padding-right: 5px;
+    padding-left: 5px;
+    border-spacing: 10px 0px;
+    text-align: center;
+  }
+  input {
+    font-size: 18px;
+    max-width: 50%;
+  }
+}

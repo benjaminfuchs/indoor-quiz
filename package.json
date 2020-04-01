@@ -1,0 +1,14 @@
+{
+  "name": "Woliegtdas",
+  "version": "0.0.1",
+  "description": "Multiplayer Geo quiz with NodeJS and Socket.io",
+  "author": {
+    "name": "Benjamin Fuchs"
+  },
+  "dependencies": {
+    "express": "4.12.3",
+    "html-entities": "1.1.2",
+    "jslint": "^0.12.0",
+    "socket.io": "1.3.5"
+  }
+}
