@@ -1,5 +1,7 @@
 # indoor-quiz
 
+[![Build Status](https://travis-ci.org/benjaminfuchs/indoor-quiz.svg?branch=master)](https://travis-ci.org/benjaminfuchs/indoor-quiz)
+
 Two players quiz to guess object locations in ground plan.
 
 To start run:
