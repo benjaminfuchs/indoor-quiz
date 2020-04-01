@@ -110,9 +110,16 @@ html, body {
 }
 
 #dialog h1 {
+  font-weight: 800;
+  font-size: 30px;
+  color: #444;
+  text-align: center;
+}
+
+#dialog h2 {
   font-weight: 700;
   font-size: 40px;
-  color: #444;
+  color: black;
   text-align: center;
 }
 
