@@ -1,4 +1,4 @@
-language:        python
+language: python
 
 env:
   - NODE_VERSION="0.12"
@@ -7,16 +7,17 @@ before_install:
   - nvm install $NODE_VERSION
 
 addons:
-  chrome:        stable
+  chrome: stable
 
 install:
+  # Setup chrome + chromedriver
   - wget -N http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip -P ~/
   - unzip ~/chromedriver_linux64.zip -d ~/
   - rm ~/chromedriver_linux64.zip
   - sudo mv -f ~/chromedriver /usr/local/share/
   - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
-
-script:
   - export SELENIUM_CHROME_BIN="$(which google-chrome-stable)"
-  - pytest
+  - echo "${SELENIUM_CHROME_BIN}"
+  # Setup python env
+  - pip install -r requirements.txt
