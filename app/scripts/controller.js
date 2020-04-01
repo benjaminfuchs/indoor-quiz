@@ -146,7 +146,7 @@ define(["io", "underscore", "client"], function (io, _, Client) {
         this.model.setFirst(id);
         this.view.showName(this.model.getPlayerName(id));
       } else {
-        this.view.showName("Vorbei");
+        this.view.showName("&#128227;");
       }
       if (this.model.getMode() == "presenter") {
         this.view.playHorn();
