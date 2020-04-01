@@ -1,5 +1,6 @@
 """ Driver class for interaction with the quiz web interface """
 
+import os
 from contextlib import ContextDecorator
 from selenium import webdriver
 
@@ -12,8 +13,14 @@ class QuizDriver(ContextDecorator):
         self._url = TEST_URL
         self._options = webdriver.ChromeOptions()
         self._options.add_argument('--ignore-certificate-errors')
-        self._options.add_argument("--test-type")
-        self._options.binary_location = "/usr/bin/chromium-browser"
+        self._options.add_argument('--headless')
+        self._options.add_argument('--enable-automation')
+
+        if os.environ['SELENIUM_CHROME_BIN']:
+            self._options.binary_location = "/usr/bin/chromium-browser"
+        else:
+            self._options.binary_location = "/usr/bin/chromium-browser"
+
         self._driver = webdriver.Chrome(chrome_options=self._options)
         self._driver.implicitly_wait(ELASTIC_TIME)
         self._driver.get('http://localhost:8900/')
