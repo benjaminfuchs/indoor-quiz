@@ -1,0 +1,10 @@
+language: python
+
+env:
+  - NODE_VERSION="0.12"
+
+before_install:
+  - nvm install $NODE_VERSION
+
+script:
+- pytest
