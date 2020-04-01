@@ -1,14 +1,14 @@
 {
-  "name": "Woliegtdas",
+  "name": "indoor-quit",
   "version": "0.0.1",
-  "description": "Multiplayer Geo quiz with NodeJS and Socket.io",
+  "description": "Two player quiz with NodeJS and Socket.io",
   "author": {
     "name": "Benjamin Fuchs"
   },
   "dependencies": {
-    "express": "4.12.3",
-    "html-entities": "1.1.2",
-    "jslint": "^0.12.0",
-    "socket.io": "1.3.5"
+    "express": "4.17.1",
+    "html-entities": "1.2.1",
+    "jslint": "0.12.1",
+    "socket.io": "2.3.0"
   }
 }
