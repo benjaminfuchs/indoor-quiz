@@ -160,8 +160,7 @@ define(["io", "underscore", "client"], function (io, _, Client) {
         clearInterval(this.timer);
         this.view.stopAudio();
       }
-      let fileName = this.model.getImage().fileName;
-      this.view.showImage("../media/" + fileName + ".png");
+      this.view.showImage(this.model.getImage().fileName);
     }
 
     stateSuperhorn() {
