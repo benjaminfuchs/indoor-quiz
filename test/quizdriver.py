@@ -17,7 +17,7 @@ class QuizDriver(ContextDecorator):
         self._options.add_argument('--enable-automation')
 
         if os.environ.get('SELENIUM_CHROME_BIN'):
-            self._options.binary_location = "/usr/bin/chromium-browser"
+            self._options.binary_location = os.environ['SELENIUM_CHROME_BIN']
         else:
             self._options.binary_location = "/usr/bin/chromium-browser"
 
