@@ -2,6 +2,14 @@
 
 Two players quiz to guess object locations in ground plan.
 
+To start run:
+
+`$> npm install`
+
+`$> node server.js`
+
+The local server will be at `localhost:8900`.
+
 ### JavaScript libraries, CSS, icons
 
 * Leaflet - http://leafletjs.com
