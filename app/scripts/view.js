@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
 define([
-  "jquery", "sql"
+  "jquery"
 ], function ($) {
   "use strict";
 

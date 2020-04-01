@@ -3,16 +3,13 @@
 require.config({
   paths: {
     "io": [
-      "../lib/socket"
+      "../lib/socket.io"
     ],
     "jquery": [
       "../lib/jquery"
     ],
     "underscore": [
       "../lib/underscore"
-    ],
-    "sql": [
-      "../lib/sql"
     ]
   },
   shim: {
