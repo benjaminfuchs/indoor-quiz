@@ -31,19 +31,31 @@ class QuizPage(ContextDecorator):
 
     def _create_driver(self):
         start_time = time.time()
+        if os.environ.get('SELENIUM_CHROME_BIN'):
+            driver = self._create_chrome_driver(os.environ['SELENIUM_CHROME_BIN'])
+        elif os.environ.get('SELENIUM_FIREFOX_BIN')
+            driver = self._create_firefox_driver(os.environ['SELENIUM_CHROME_BIN'])
+        else:
+            driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
+        driver.get(self.TEST_URL)
+        driver.implicitly_wait(time.time() - start_time)
+        return driver
+
+    def _create_chrome_driver(self, bin):
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--headless')
         options.add_argument('--enable-automation')
-        if os.environ.get('SELENIUM_CHROME_BIN'):
-            options.binary_location = os.environ['SELENIUM_CHROME_BIN']
-        else:
-            options.binary_location = self.DEFAULT_CHROME_BIN
-
+        options.binary_location = os.path.abspath(os.path.norm(bin))
         driver = webdriver.Chrome(options=options)
-        driver.get(self.TEST_URL)
-        driver.implicitly_wait(time.time() - start_time)
         return driver
+
+    def _create_firefox_driver(self, bin):
+        options = webdriver.FirefoxOptions()
+        options.add_argument('--headless')
+        options.binary_location = os.path.abspath(os.path.norm(bin))
+        driver = webdriver.Firefox(options=options)
+        return options
 
     def join_as_quizmaster(self):
         self._driver.find_element(*self._quizmaster_button).click()

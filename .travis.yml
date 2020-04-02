@@ -7,19 +7,28 @@ jobs:
     - addons:
         chrome: stable
       env: CHROMEDRIVER_VERSION="80.0.3987.106" NODE_VERSION="12.16.1"
+      before_install:
+        - wget -N https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip -P ~/
+        - unzip ~/chromedriver_linux64.zip -d ~/
+        - rm ~/chromedriver_linux64.zip
+        - sudo mv -f ~/chromedriver /usr/local/share/
+        - sudo chmod +x /usr/local/share/chromedriver
+        - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+        - export SELENIUM_CHROME_BIN="$(which google-chrome-stable)"
+
     - addons:
         firefox: latest
-      env: CHROMEDRIVER_VERSION="80.0.3987.106" NODE_VERSION="12.16.1"
+      env: GECKODRIVER_VERSION="v0.26.0" NODE_VERSION="12.16.1"
+      before_install:
+        - wget https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VERSION}/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz -P ~/
+        - tar -xzf ~/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz -C ~/
+        - rm ~/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz
+        - sudo mv -f ~/geckodriver /usr/local/share/
+        - sudo chmod +x /usr/local/share/geckodriver
+        - sudo ln -s /usr/local/share/geckodriver /usr/local/bin/geckodriver
+        - export SELENIUM_FIREFOX_BIN="$(which firefox)"
 
 install:
-  # Setup chrome + chromedriver
-  - wget -N https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip -P ~/
-  - unzip ~/chromedriver_linux64.zip -d ~/
-  - rm ~/chromedriver_linux64.zip
-  - sudo mv -f ~/chromedriver /usr/local/share/
-  - sudo chmod +x /usr/local/share/chromedriver
-  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
-  - export SELENIUM_CHROME_BIN="$(which google-chrome-stable)"
   # Setup python env
   - pip install -r requirements.txt
   # Install node and dependencies
