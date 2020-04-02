@@ -1,7 +1,7 @@
 """ Test dialog interaction """
 
-from roles import Player, Presenter
-from testcase import TestCase
+from lib.roles import Player, Presenter
+from lib.testcase import TestCase
 
 class TestDialog(TestCase):
 

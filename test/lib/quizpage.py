@@ -5,7 +5,7 @@ from contextlib import ContextDecorator
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from helper import TextToChange
+from lib.helper import TextToChange
 
 class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """

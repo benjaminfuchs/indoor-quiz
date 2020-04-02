@@ -1,6 +1,6 @@
 """ Presenter class for testing the quiz """
 
-from quizpage import QuizPage
+from lib.quizpage import QuizPage
 
 class Presenter(QuizPage):
 
