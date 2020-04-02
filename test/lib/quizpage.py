@@ -33,13 +33,14 @@ class QuizPage(ContextDecorator):
         self._driver.close()
 
     def _create_driver(self):
+        start_time = time.time()
+
         if os.environ.get('SELENIUM_CHROME_BIN'):
             driver = self._create_chrome_driver(os.environ['SELENIUM_CHROME_BIN'])
         elif os.environ.get('SELENIUM_FIREFOX_BIN'):
             driver = self._create_firefox_driver(os.environ['SELENIUM_FIREFOX_BIN'])
         else:
             driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
-        start_time = time.time()
         driver.get(self.TEST_URL)
         WebDriverWait(driver,
                       self.MAX_TIMEOUT).until(EC.presence_of_element_located(self._join_button))
