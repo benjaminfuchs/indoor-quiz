@@ -23,13 +23,3 @@ class TestDialog(TestCase):
             assert actual_name == "AFFEAFFE"
             actual_name = presenter.get_player_name(2)
             assert actual_name == "DEADBEEF"
-
-    @staticmethod
-    def test_joining_player_before_presenter():
-        Player("AFFEAFFE")
-
-        with Presenter() as presenter:
-            actual_name = presenter.get_player_name(1)
-            assert actual_name == "Waiting..."
-            actual_name = presenter.get_player_name(2)
-            assert actual_name == "Waiting..."
