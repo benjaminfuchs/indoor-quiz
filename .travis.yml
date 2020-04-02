@@ -2,11 +2,14 @@ language: python
 
 cache: pip
 
-addons:
-  chrome: stable
-
-env:
-  - CHROMEDRIVER_VERSION="80.0.3987.106" NODE_VERSION="12.16.1"
+jobs:
+  include:
+    - addons:
+        chrome: stable
+      env: CHROMEDRIVER_VERSION="80.0.3987.106" NODE_VERSION="12.16.1"
+    - addons:
+        firefox: latest
+      env: CHROMEDRIVER_VERSION="80.0.3987.106" NODE_VERSION="12.16.1"
 
 install:
   # Setup chrome + chromedriver
