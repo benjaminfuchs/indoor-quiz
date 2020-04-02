@@ -45,7 +45,7 @@ class QuizPage(ContextDecorator):
         driver.get(self.TEST_URL)
         WebDriverWait(driver,
                       self.MAX_TIMEOUT).until(EC.presence_of_element_located(self._join_button))
-        driver.implicitly_wait((time.time() - start_time) * ELASTIC_TIME)
+        driver.implicitly_wait((time.time() - start_time) * self.ELASTIC_TIME)
         return driver
 
     @staticmethod
