@@ -13,8 +13,11 @@ from lib.helper import TextToChange
 class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
+    # The elastic timeout is multiplied to a timeout calculated based on the
+    # maschines performance. Increase it if you run into timeout.
+    ELASTIC_TIMEOUT = 1
+
     DEFAULT_CHROME_BIN = '/usr/bin/chromium-browser'
-    ELASTIC_TIMEOUT = 10
     MAX_TIMEOUT = 60
     TEST_URL = 'http://localhost:8900/'
 
@@ -43,8 +46,9 @@ class QuizPage(ContextDecorator):
         else:
             driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
         driver.get(self.TEST_URL)
+
         WebDriverWait(driver,
-                      self.MAX_TIMEOUT).until(EC.presence_of_element_located(self._join_button))
+                      self.MAX_TIMEOUT).until(EC.element_to_be_clickable(self._join_button))
         driver.implicitly_wait((time.time() - start_time) * self.ELASTIC_TIMEOUT)
         return driver
 
@@ -52,15 +56,17 @@ class QuizPage(ContextDecorator):
     def _create_chrome_driver(binary):
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
-        options.add_argument('--headless')
         options.add_argument('--enable-automation')
+        if not os.environ.get('SELENIUM_DEBUG'):
+             options.add_argument('--headless')
         options.binary_location = os.path.abspath(binary)
         return webdriver.Chrome(options=options)
 
     @staticmethod
     def _create_firefox_driver(binary):
         options = webdriver.FirefoxOptions()
-        options.add_argument('--headless')
+        if not os.environ.get('SELENIUM_DEBUG'):
+             options.add_argument('--headless')
         options.binary_location = os.path.abspath(binary)
         return webdriver.Firefox(options=options)
 
