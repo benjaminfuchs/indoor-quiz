@@ -13,13 +13,13 @@ from lib.helper import TextToChange
 class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
-    # The elastic timeout is multiplied to a timeout calculated based on the
-    # maschines performance. Increase it if you run into timeout.
+    # The elastic timeout is multiplied to the implicit wait time which is
+    # calculated based on the time we wait for the start dialog.
+    # Increase it if you run into timeouts.
     ELASTIC_TIMEOUT = 1
 
     DEFAULT_CHROME_BIN = '/usr/bin/chromium-browser'
     MAX_TIMEOUT = 60
-    TEST_URL = 'http://localhost:8900/'
 
     def __init__(self):
         self._quizmaster_button = (By.ID, 'quizmasterButton')
@@ -34,18 +34,26 @@ class QuizPage(ContextDecorator):
         return self
 
     def __exit__(self, *exc):
-        self._driver.close()
+        self._driver.quit()
 
     def _create_driver(self):
         if os.environ.get('SELENIUM_CHROME_BIN'):
             driver = self._create_chrome_driver(os.environ['SELENIUM_CHROME_BIN'])
+        elif os.environ.get('SELENIUM_REMOTE_FIREFOX'):
+            driver = self._create_remote_firefox_driver(os.environ['SELENIUM_REMOTE_FIREFOX'])
         elif os.environ.get('SELENIUM_FIREFOX_BIN'):
             driver = self._create_firefox_driver(os.environ['SELENIUM_FIREFOX_BIN'])
         else:
             driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
-        driver.get(self.TEST_URL)
+        driver.get(self._get_server_url())
         driver.implicitly_wait(self._get_implicit_wait(driver))
         return driver
+
+    @staticmethod
+    def _get_server_url():
+        if os.environ.get('TEST_SERVER_IP'):
+            return 'http://' + os.environ['SERVER_IP'] + ':8900/'
+        return 'http://localhost:8900/'
 
     def _get_implicit_wait(self, driver):
         """ Calculate the implicit wait based on time waiting for start dialog """
@@ -54,6 +62,16 @@ class QuizPage(ContextDecorator):
         WebDriverWait(driver,
                       self.MAX_TIMEOUT).until(EC.element_to_be_clickable(self._join_button))
         return (time.time() - start_time) * self.ELASTIC_TIMEOUT
+
+    @staticmethod
+    def _create_remote_firefox_driver(url):
+        options = webdriver.FirefoxOptions()
+        options.add_argument('--headless')
+        options.set_capability('platformName', 'LINUX')
+        return webdriver.Remote(
+            command_executor=url,
+            options=options
+        )
 
     @staticmethod
     def _create_chrome_driver(binary):

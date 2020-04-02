@@ -1,4 +1,5 @@
-# indoor-quiz
+indoor-quiz
+===========
 
 [![Build Status](https://travis-ci.org/benjaminfuchs/indoor-quiz.svg?branch=master)](https://travis-ci.org/benjaminfuchs/indoor-quiz)
 
