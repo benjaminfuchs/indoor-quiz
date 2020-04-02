@@ -14,7 +14,7 @@ class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
     DEFAULT_CHROME_BIN = '/usr/bin/chromium-browser'
-    ELASTIC_TIMEOUT = 2
+    ELASTIC_TIMEOUT = 10
     MAX_TIMEOUT = 60
     TEST_URL = 'http://localhost:8900/'
 
