@@ -37,8 +37,6 @@ class QuizPage(ContextDecorator):
         self._driver.close()
 
     def _create_driver(self):
-        start_time = time.time()
-
         if os.environ.get('SELENIUM_CHROME_BIN'):
             driver = self._create_chrome_driver(os.environ['SELENIUM_CHROME_BIN'])
         elif os.environ.get('SELENIUM_FIREFOX_BIN'):
@@ -46,11 +44,16 @@ class QuizPage(ContextDecorator):
         else:
             driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
         driver.get(self.TEST_URL)
+        driver.implicitly_wait(self._get_implicit_wait(driver))
+        return driver
 
+    def _get_implicit_wait(self, driver):
+        """ Calculate the implicit wait based on time waiting for start dialog """
+
+        start_time = time.time()
         WebDriverWait(driver,
                       self.MAX_TIMEOUT).until(EC.element_to_be_clickable(self._join_button))
-        driver.implicitly_wait((time.time() - start_time) * self.ELASTIC_TIMEOUT)
-        return driver
+        return (time.time() - start_time) * self.ELASTIC_TIMEOUT
 
     @staticmethod
     def _create_chrome_driver(binary):
@@ -58,7 +61,7 @@ class QuizPage(ContextDecorator):
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--enable-automation')
         if not os.environ.get('SELENIUM_DEBUG'):
-             options.add_argument('--headless')
+            options.add_argument('--headless')
         options.binary_location = os.path.abspath(binary)
         return webdriver.Chrome(options=options)
 
@@ -66,7 +69,7 @@ class QuizPage(ContextDecorator):
     def _create_firefox_driver(binary):
         options = webdriver.FirefoxOptions()
         if not os.environ.get('SELENIUM_DEBUG'):
-             options.add_argument('--headless')
+            options.add_argument('--headless')
         options.binary_location = os.path.abspath(binary)
         return webdriver.Firefox(options=options)
 
