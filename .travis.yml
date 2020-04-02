@@ -2,11 +2,14 @@ language: python
 
 cache: pip
 
+env:
+  - NODE_VERSION="12.16.1"
+
 jobs:
   include:
     - addons:
         chrome: stable
-      env: CHROMEDRIVER_VERSION="80.0.3987.106" NODE_VERSION="12.16.1"
+      env: CHROMEDRIVER_VERSION="80.0.3987.106"
       before_install:
         - wget -N https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip -P ~/
         - unzip ~/chromedriver_linux64.zip -d ~/
@@ -18,7 +21,7 @@ jobs:
 
     - addons:
         firefox: latest
-      env: GECKODRIVER_VERSION="v0.26.0" NODE_VERSION="12.16.1"
+      env: GECKODRIVER_VERSION="v0.26.0"
       before_install:
         - wget https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VERSION}/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz -P ~/
         - tar -xzf ~/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz -C ~/
