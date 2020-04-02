@@ -4,12 +4,14 @@ import os
 from contextlib import ContextDecorator
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from helper import TextToChange
 
 class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
     DEFAULT_CHROME_BIN = "/usr/bin/chromium-browser"
-    ELASTIC_TIME = 10
+    ELASTIC_TIME = 1
     TEST_URL = "http://localhost:8900/"
 
     def __init__(self):
@@ -43,19 +45,25 @@ class QuizPage(ContextDecorator):
         return driver
 
     def join_as_quizmaster(self):
-        self._driver.find_elements(*self._quizmaster_button).click()
+        self._driver.find_element(*self._quizmaster_button).click()
 
     def join_as_presenter(self):
-        self._driver.find_elements(*self._presenter_button).click()
+        self._driver.find_element(*self._presenter_button).click()
 
     def join_as_player(self, name):
-        self._driver.find_elements(*self._player_name_form).clear()
-        self._driver.find_elements(*self._player_name_form).send_keys(name)
-        self._driver.find_elements(*self._join_button).click()
+        self._driver.find_element(*self._player_name_form).clear()
+        self._driver.find_element(*self._player_name_form).send_keys(name)
+        self._driver.find_element(*self._join_button).click()
 
     def get_player_name(self, num):
         if num == 1:
-            return self._driver.find_elements(*self._player_one_textbox).text
-        if num == 2:
-            return self._driver.find_elements(*self._player_two_textbox).text
-        raise ValueError('No player number "%s" found' % str(num))
+            locator = self._player_one_textbox
+        elif num == 2:
+            locator = self._player_two_textbox
+        else:
+            raise ValueError('No player number "%s" found' % str(num))
+
+        WebDriverWait(self._driver, 10).until(
+            TextToChange(locator, 'Waiting...')
+        )
+        return self._driver.find_element(*locator).text

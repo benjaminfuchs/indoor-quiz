@@ -1,9 +1,7 @@
 """ Test dialog interaction """
 
-import time
 from roles import Player, Presenter
 from testcase import TestCase
-
 
 class TestDialog(TestCase):
 
@@ -11,7 +9,6 @@ class TestDialog(TestCase):
     def test_joining_one_player():
         with Presenter() as presenter:
             Player("AFFEAFFE")
-            time.sleep(2) # FIXME(bfuchs) Ugly wait, find better solution with selenium
 
             actual_name = presenter.get_player_name(1)
             assert actual_name == "AFFEAFFE"
@@ -21,7 +18,6 @@ class TestDialog(TestCase):
         with Presenter() as presenter:
             Player("AFFEAFFE")
             Player("DEADBEEF")
-            time.sleep(2) # FIXME(bfuchs) Ugly wait, find better solution with selenium
 
             actual_name = presenter.get_player_name(1)
             assert actual_name == "AFFEAFFE"
