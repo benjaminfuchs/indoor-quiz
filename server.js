@@ -34,7 +34,7 @@ io.on("connection", function(socket) {
    * Handle city from client
    */
   socket.on("inImage", function(imagePosition) {
-    log(socket.id + " image: " + imagePosition);
+    log("ID " + socket.id + " image: " + imagePosition);
     for (let entry in sockets) {
       io.to(sockets[entry]).emit("outImage", imagePosition);
     }
@@ -44,7 +44,7 @@ io.on("connection", function(socket) {
    * Handle guess from client
    */
   socket.on("inGuess", function(guess) {
-    log(socket.id + " guess: " + guess.x + " " + guess.y);
+    log("ID " + socket.id + " guess: " + guess.x + " " + guess.y);
     for (let entry in sockets) {
       io.to(sockets[entry]).emit("outGuess", socket.id, guess);
     }
@@ -54,7 +54,7 @@ io.on("connection", function(socket) {
    * Handle state from client
    */
   socket.on("inState", function(state) {
-    log(socket.id + " state: " + state);
+    log("ID " + socket.id + " state: " + state);
     for (let entry in sockets) {
       io.to(sockets[entry]).emit("outState", socket.id, state);
     }
@@ -64,9 +64,16 @@ io.on("connection", function(socket) {
    * Handle player from client
    */
   socket.on("inPlayer", function(player) {
-    log(socket.id + " player: " + player);
+    log("ID " + socket.id + " player: " + player);
     for (let entry in sockets) {
       io.to(sockets[entry]).emit("outPlayer", socket.id, player);
     }
   });
 });
+
+process.on('SIGTERM', shutDown);
+
+function shutDown() {
+    console.log('Received kill signal, shutting down gracefully');
+    process.exit(0);
+}

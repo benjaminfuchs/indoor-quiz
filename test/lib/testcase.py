@@ -1,11 +1,24 @@
 """ Testcase class for generic setup and teardown """
 
-from multiprocessing import Process
+from contextlib import ContextDecorator
+from subprocess import Popen
 import os
+import signal
 from Naked.toolshed.shell import execute_js
 import git
 import pytest
 
+class NodeProcess(ContextDecorator):
+    def __init__(self, cmd):
+        self._process = Popen(cmd)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self._process.terminate()
+        self._process.wait()
+        assert self._process.returncode == 0
 
 class TestCase:
 
@@ -20,9 +33,5 @@ class TestCase:
     @pytest.fixture(autouse=True)
     def server(cls):
         git_root = cls.get_git_root()
-        node_process = Process(target=execute_js,
-                               args=[os.path.join(git_root, 'server.js')])
-        node_process.start()
-        yield
-        node_process.terminate()
-        node_process.join()
+        with NodeProcess(['node', os.path.join(git_root, 'server.js')]) as process:
+            yield process

@@ -5,23 +5,26 @@ import os
 from contextlib import ContextDecorator
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from lib.helper import TextToChange
+
 
 class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
     DEFAULT_CHROME_BIN = '/usr/bin/chromium-browser'
+    MAX_TIMEOUT = 60
     TEST_URL = 'http://localhost:8900/'
 
     def __init__(self):
-        self._driver = self._create_driver()
         self._quizmaster_button = (By.ID, 'quizmasterButton')
         self._presenter_button = (By.ID, 'presenterButton')
         self._join_button = (By.ID, 'joinButton')
         self._player_name_form = (By.ID, 'playerName')
         self._player_one_textbox = (By.ID, 'namePlayer1')
         self._player_two_textbox = (By.ID, 'namePlayer2')
+        self._driver = self._create_driver()
 
     def __enter__(self):
         return self
@@ -30,15 +33,16 @@ class QuizPage(ContextDecorator):
         self._driver.close()
 
     def _create_driver(self):
-        start_time = time.time()
         if os.environ.get('SELENIUM_CHROME_BIN'):
             driver = self._create_chrome_driver(os.environ['SELENIUM_CHROME_BIN'])
         elif os.environ.get('SELENIUM_FIREFOX_BIN'):
             driver = self._create_firefox_driver(os.environ['SELENIUM_FIREFOX_BIN'])
         else:
             driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
+        start_time = time.time()
         driver.get(self.TEST_URL)
-        driver.implicitly_wait(time.time() - start_time)
+        WebDriverWait(driver, self.MAX_TIMEOUT).until(EC.presence_of_element_located(self._join_button))
+        driver.implicitly_wait((time.time() - start_time))
         return driver
 
     @staticmethod
@@ -76,7 +80,5 @@ class QuizPage(ContextDecorator):
         else:
             raise ValueError('No player number "%s" found' % str(num))
 
-        WebDriverWait(self._driver, 10).until(
-            TextToChange(locator, 'Waiting...')
-        )
+        WebDriverWait(self._driver, 10).until(TextToChange(locator, 'Waiting...'))
         return self._driver.find_element(*locator).text
