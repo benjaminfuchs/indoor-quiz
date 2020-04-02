@@ -41,7 +41,8 @@ class QuizPage(ContextDecorator):
             driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
         start_time = time.time()
         driver.get(self.TEST_URL)
-        WebDriverWait(driver, self.MAX_TIMEOUT).until(EC.presence_of_element_located(self._join_button))
+        WebDriverWait(driver,
+                      self.MAX_TIMEOUT).until(EC.presence_of_element_located(self._join_button))
         driver.implicitly_wait((time.time() - start_time))
         return driver
 

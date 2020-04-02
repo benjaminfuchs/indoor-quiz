@@ -3,8 +3,6 @@
 from contextlib import ContextDecorator
 from subprocess import Popen
 import os
-import signal
-from Naked.toolshed.shell import execute_js
 import git
 import pytest
 
