@@ -11,8 +11,8 @@ from lib.helper import TextToChange
 class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
-    DEFAULT_CHROME_BIN = "/usr/bin/chromium-browser"
-    TEST_URL = "http://localhost:8900/"
+    DEFAULT_CHROME_BIN = '/usr/bin/chromium-browser'
+    TEST_URL = 'http://localhost:8900/'
 
     def __init__(self):
         self._driver = self._create_driver()
@@ -34,28 +34,28 @@ class QuizPage(ContextDecorator):
         if os.environ.get('SELENIUM_CHROME_BIN'):
             driver = self._create_chrome_driver(os.environ['SELENIUM_CHROME_BIN'])
         elif os.environ.get('SELENIUM_FIREFOX_BIN'):
-            driver = self._create_firefox_driver(os.environ['SELENIUM_CHROME_BIN'])
+            driver = self._create_firefox_driver(os.environ['SELENIUM_FIREFOX_BIN'])
         else:
             driver = self._create_chrome_driver(self.DEFAULT_CHROME_BIN)
         driver.get(self.TEST_URL)
         driver.implicitly_wait(time.time() - start_time)
         return driver
 
-    def _create_chrome_driver(self, bin):
+    @staticmethod
+    def _create_chrome_driver(binary):
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--headless')
         options.add_argument('--enable-automation')
-        options.binary_location = os.path.abspath(os.path.norm(bin))
-        driver = webdriver.Chrome(options=options)
-        return driver
+        options.binary_location = os.path.abspath(binary)
+        return webdriver.Chrome(options=options)
 
-    def _create_firefox_driver(self, bin):
+    @staticmethod
+    def _create_firefox_driver(binary):
         options = webdriver.FirefoxOptions()
         options.add_argument('--headless')
-        options.binary_location = os.path.abspath(os.path.norm(bin))
-        driver = webdriver.Firefox(options=options)
-        return options
+        options.binary_location = os.path.abspath(binary)
+        return webdriver.Firefox(options=options)
 
     def join_as_quizmaster(self):
         self._driver.find_element(*self._quizmaster_button).click()
