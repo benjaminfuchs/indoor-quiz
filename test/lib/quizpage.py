@@ -1,5 +1,6 @@
 """ Driver class for interaction with the quiz web interface """
 
+import time
 import os
 from contextlib import ContextDecorator
 from selenium import webdriver
@@ -11,7 +12,6 @@ class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
     DEFAULT_CHROME_BIN = "/usr/bin/chromium-browser"
-    ELASTIC_TIME = 1
     TEST_URL = "http://localhost:8900/"
 
     def __init__(self):
@@ -30,6 +30,7 @@ class QuizPage(ContextDecorator):
         self._driver.close()
 
     def _create_driver(self):
+        start_time = time.time()
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--headless')
@@ -40,8 +41,8 @@ class QuizPage(ContextDecorator):
             options.binary_location = self.DEFAULT_CHROME_BIN
 
         driver = webdriver.Chrome(options=options)
-        driver.implicitly_wait(self.ELASTIC_TIME)
         driver.get(self.TEST_URL)
+        driver.implicitly_wait(time.time() - start_time)
         return driver
 
     def join_as_quizmaster(self):
