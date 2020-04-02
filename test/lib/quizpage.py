@@ -14,6 +14,7 @@ class QuizPage(ContextDecorator):
     """ Page Object encapsulates the Quiz Page """
 
     DEFAULT_CHROME_BIN = '/usr/bin/chromium-browser'
+    ELASTIC_TIMEOUT = 2
     MAX_TIMEOUT = 60
     TEST_URL = 'http://localhost:8900/'
 
@@ -44,7 +45,7 @@ class QuizPage(ContextDecorator):
         driver.get(self.TEST_URL)
         WebDriverWait(driver,
                       self.MAX_TIMEOUT).until(EC.presence_of_element_located(self._join_button))
-        driver.implicitly_wait((time.time() - start_time))
+        driver.implicitly_wait((time.time() - start_time) * ELASTIC_TIME)
         return driver
 
     @staticmethod
