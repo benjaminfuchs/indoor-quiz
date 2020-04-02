@@ -1,22 +1,22 @@
 """ Presenter class for testing the quiz """
 
-from quizdriver import QuizDriver
+from quizpage import QuizPage
 
-class Presenter(QuizDriver):
+class Presenter(QuizPage):
 
     def __init__(self):
         super(Presenter, self).__init__()
         self.join_as_presenter()
 
 
-class Quizmaster(QuizDriver):
+class Quizmaster(QuizPage):
 
     def __init__(self):
         super(Quizmaster, self).__init__()
         self.join_as_quizmaster()
 
 
-class Player(QuizDriver):
+class Player(QuizPage):
 
     def __init__(self, name):
         super(Player, self).__init__()
